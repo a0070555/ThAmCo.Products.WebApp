@@ -60,7 +60,6 @@ namespace ThAmCo.Products.WebApp.Controllers
                 _logger.LogWarning("Exception occurred using Products service.");
                 return StatusCode(StatusCodes.Status503ServiceUnavailable);
             }
-
         }
     }
 }
