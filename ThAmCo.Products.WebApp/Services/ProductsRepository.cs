@@ -38,5 +38,28 @@ namespace ThAmCo.Products.WebApp.Services
             var products = await response.Content.ReadAsAsync<IEnumerable<Product>>();
             return products;
         }
+
+        public async Task<Product> CreateProductAsync(Product product)
+        {
+            var response = await _client.PostAsJsonAsync("api/products", product);
+            response.EnsureSuccessStatusCode();
+            var createdProduct = await response.Content.ReadAsAsync<Product>();
+            return createdProduct;
+        }
+
+        public async Task<Product> UpdateProductAsync(int id, Product product)
+        {
+            var response = await _client.PutAsJsonAsync("api/products/" + id, product);
+            response.EnsureSuccessStatusCode();
+            var updatedProduct = await response.Content.ReadAsAsync<Product>();
+            return updatedProduct;
+        }
+
+        public async Task DeleteProductAsync(int id)
+        {
+            var response = await _client.DeleteAsync("api/products/" + id);
+            response.EnsureSuccessStatusCode();
+        }
+
     }
 }

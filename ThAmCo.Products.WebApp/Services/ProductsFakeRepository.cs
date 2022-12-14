@@ -14,6 +14,16 @@ namespace ThAmCo.Products.WebApp.Services
 
         };
 
+        public Task<Product> CreateProductAsync(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteProductAsync(int value)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Product> GetProductAsync(int id)
         {
             var product = _products.FirstOrDefault(p => p.ProductId == id);
@@ -25,6 +35,11 @@ namespace ThAmCo.Products.WebApp.Services
             var products = _products.AsEnumerable();
             
             return Task.FromResult(products);
+        }
+
+        public Task<Product> UpdateProductAsync(int id, Product product)
+        {
+            throw new NotImplementedException();
         }
     }
 }
