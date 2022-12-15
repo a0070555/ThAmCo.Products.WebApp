@@ -1,10 +1,13 @@
-﻿using ThAmCo.Products.WebApp.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using ThAmCo.Products.WebApp.Models;
 
 namespace ThAmCo.Products.WebApp.Services
 {
     public class ProductsFakeRepository : IProductsRepository
 
     {
+
+
         private readonly Product[] _products = 
         {
             new Product { ProductId = 1, ProductName = "Test", Quantity = 2, Price = 0.5, Description = "This is a test" },
@@ -14,12 +17,13 @@ namespace ThAmCo.Products.WebApp.Services
 
         };
 
-        public Task<Product> CreateProductAsync(Product product)
+        public async Task<Product> CreateProductAsync(Product product)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteProductAsync(int value)
+
+        public async Task DeleteProductAsync(int id)
         {
             throw new NotImplementedException();
         }
@@ -37,9 +41,10 @@ namespace ThAmCo.Products.WebApp.Services
             return Task.FromResult(products);
         }
 
-        public Task<Product> UpdateProductAsync(int id, Product product)
+        public async Task<Product> UpdateProductAsync(int id, Product product)
         {
             throw new NotImplementedException();
         }
+
     }
 }
