@@ -49,3 +49,20 @@ jobs:
         with:
           name: build
           path: ${{ env.PUBLISH_PATH }}
+
+deploy-test:
+  runs-on: ubuntu-latest
+  needs: build
+  
+  steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: build
+        path: ${{ env.PUBLISH_PATH }}
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.THAMCO_PRODUCTS_SECRET }}
+        package: ${{ env.PUBLISH_PATH }}
