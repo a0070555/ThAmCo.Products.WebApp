@@ -5,11 +5,13 @@ on: [push]
 env:
   DOTNET_VERSION: 6.0.x
   BUILD_CONFIGURATION: Release
-  PROJECT_PATH: ./thamco.products.webapp
+  PROJECT_PATH: ./ThAmCo.Products.WebApp
   PUBLISH_PATH: ./myapp
   TESTRESULTS_PATH: ./test-results
+  AZURE_WEBAPP_NAME: ThamcoProducts
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -50,19 +52,22 @@ jobs:
           name: build
           path: ${{ env.PUBLISH_PATH }}
 
-deploy-test:
-  runs-on: ubuntu-latest
-  needs: build
-  
-  steps:
-    - uses: actions/download-artifact@v3
-      with:
-        name: build
-        path: ${{ env.PUBLISH_PATH }}
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.THAMCO_PRODUCTS_SECRET }}
-        package: ${{ env.PUBLISH_PATH }}
+  deploy-test:
+    runs-on: ubuntu-latest
+    needs: build
+#   environment:
+#     name: 'production'
+#     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+#   if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: ${{ env.PUBLISH_PATH }}
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.THAMCO_PRODUCTS_SECRET  }} # Define secret in GitHub with contents of Publish Profile
+          package: ${{ env.PUBLISH_PATH }}
