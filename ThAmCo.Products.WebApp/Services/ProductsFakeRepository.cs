@@ -34,7 +34,7 @@ namespace ThAmCo.Products.WebApp.Services
             return Task.FromResult(product);
         }
 
-        public Task<IEnumerable<Product>> GetProductsAsync(string subject)
+        public Task<IEnumerable<Product>> GetProductsAsync(string type)
         {
             var products = _products.AsEnumerable();
             

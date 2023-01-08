@@ -12,16 +12,15 @@ namespace ThAmCo.Products.WebApp.Controllers
         private readonly IProductsRepository _productsRepository;
         private readonly ProductsContext _context;
 
-        public ProductsController(ILogger<ProductsController> logger, IProductsRepository productsRepository, ProductsContext context)
+        public ProductsController(ILogger<ProductsController> logger, IProductsRepository productsRepository)
         {
             _logger = logger;
             _productsRepository = productsRepository;
-            _context = context;
         }
 
 
         // GET: ProductsController
-        public async Task<IActionResult> Index([FromQuery] string? subject)
+        public async Task<IActionResult> Index([FromQuery] string? type)
         {
             if (!ModelState.IsValid)
             {
@@ -31,7 +30,7 @@ namespace ThAmCo.Products.WebApp.Controllers
             IEnumerable<Product> products = null;
             try
             {
-                products = await _productsRepository.GetProductsAsync(subject);
+                products = await _productsRepository.GetProductsAsync(type);
             }
             catch
             {

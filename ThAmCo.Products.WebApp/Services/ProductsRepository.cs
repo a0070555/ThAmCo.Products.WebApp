@@ -6,9 +6,10 @@ namespace ThAmCo.Products.WebApp.Services
     public class ProductsRepository : IProductsRepository
     {
         private readonly HttpClient _client;
-        public ProductsRepository(HttpClient client)
+        public ProductsRepository(HttpClient client, IConfiguration configuration)
         {
-            client.BaseAddress = new System.Uri("http://localhost:7178/");
+            var baseUrl = configuration["WebServices:Products:BaseURL"];
+            client.BaseAddress = new System.Uri(baseUrl);
             client.Timeout = TimeSpan.FromSeconds(5);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             _client = client;
@@ -26,12 +27,12 @@ namespace ThAmCo.Products.WebApp.Services
                 return product;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync(string subject)
+        public async Task<IEnumerable<Product>> GetProductsAsync(string type)
         {
             var uri = "api/products";
-            if (subject != null)
+            if (type != null)
             {
-                uri = uri + "&subject=" + subject;
+                uri = uri + "&type=" + type;
             }
             var response = await _client.GetAsync(uri);
             response.EnsureSuccessStatusCode();

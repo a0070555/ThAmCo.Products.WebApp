@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Polly;
 using Polly.Extensions.Http;
+using Thamco.Products.Api.Data;
 using ThAmCo.Products.WebApp.Models;
 using ThAmCo.Products.WebApp.Services;
 
@@ -32,7 +33,7 @@ builder.Services.AddDbContext<ProductsContext>(options =>
     }
     else
     {
-        var cs = builder.Configuration.GetConnectionString("ProductsContext");
+        var cs = builder.Configuration.GetConnectionString("ProductsConnection");
         options.UseSqlServer(cs);
         options.UseSqlServer(cs, sqlServerOptionsAction: sqlOptions =>
             sqlOptions.EnableRetryOnFailure(
@@ -58,24 +59,24 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    if (app.Environment.IsDevelopment())
-//    {
-//        var context = services.GetRequiredService<ProductsContext>();
-//        context.Database.Migrate();
-//        try
-//        {
-//            ProductsInitialiser.InsertTestData(context).Wait();
-//        }
-//        catch (Exception e)
-//        {
-//            var logger = services.GetRequiredService<ILogger<Program>>();
-//            logger.LogDebug("Inserting test data failed.");
-//        }
-//    }
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    if (app.Environment.IsDevelopment())
+    {
+        var context = services.GetRequiredService<ProductsContext>();
+        context.Database.Migrate();
+        try
+        {
+            ProductsInitialiser.InsertTestData(context).Wait();
+        }
+        catch (Exception e)
+        {
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            logger.LogDebug("Inserting test data failed.");
+        }
+    }
+}
 
 
 // Configure the HTTP request pipeline.
