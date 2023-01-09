@@ -6,9 +6,7 @@ namespace ThAmCo.Products.WebApp.Services
     public class ProductsFakeRepository : IProductsRepository
 
     {
-
-
-        private readonly Product[] _products = 
+        private readonly Product[] _products =
         {
             new Product { ProductId = 1, Type="Standard", ProductName = "Test", Quantity = 2, Price = 0.5, Description = "This is a test" },
             new Product { ProductId = 2, Type="Custom", ProductName = "Test Two", Quantity = 1, Price = 1.5, Description = "This is a test of product 2" },
@@ -17,12 +15,13 @@ namespace ThAmCo.Products.WebApp.Services
 
         };
 
+
         public Task<Product> CreateProductAsync(Product product)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteProductAsync(int value)
+        public Task DeleteProductAsync(int id)
         {
             throw new NotImplementedException();
         }

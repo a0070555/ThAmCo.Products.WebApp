@@ -117,7 +117,7 @@ namespace ThAmCo.Products.WebApp.Controllers
         // POST: ProductsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,Quantity,Price,Description")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Type,ProductName,Quantity,Price,Description")] Product product)
         {
             if (id != product.ProductId)
             {

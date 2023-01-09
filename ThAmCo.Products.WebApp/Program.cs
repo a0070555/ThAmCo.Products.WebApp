@@ -59,24 +59,24 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    if (app.Environment.IsDevelopment())
-    {
-        var context = services.GetRequiredService<ProductsContext>();
-        //context.Database.Migrate();
-        try
-        {
-            ProductsInitialiser.InsertTestData(context).Wait();
-        }
-        catch (Exception e)
-        {
-            var logger = services.GetRequiredService<ILogger<Program>>();
-            logger.LogDebug("Inserting test data failed.");
-        }
-    }
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    if (app.Environment.IsDevelopment())
+//    {
+//        var context = services.GetRequiredService<ProductsContext>();
+//        context.Database.Migrate();
+//        try
+//        {
+//            ProductsInitialiser.InsertTestData(context).Wait();
+//        }
+//        catch (Exception e)
+//        {
+//            var logger = services.GetRequiredService<ILogger<Program>>();
+//            logger.LogDebug("Inserting test data failed.");
+//        }
+//    }
+//}
 
 
 // Configure the HTTP request pipeline.
